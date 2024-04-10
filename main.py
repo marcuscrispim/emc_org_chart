@@ -4,6 +4,8 @@ import pygraphviz
 # Criando um grafo direcionado
 G = nx.DiGraph()
 
+#testando branch
+
 # Adicionando nós ao grafo que representam as matérias do curso
 matérias = [
     "Introdução à Computação",
