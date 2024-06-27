@@ -29,4 +29,4 @@ Este projeto é um site interativo para visualizar e marcar disciplinas como con
 - Visualização de disciplinas por semestre.
 - Marcar disciplinas como concluídas.
 - Indicar disciplinas que podem ou não podem ser feitas com base nas concluídas.
-- Interface moderna com cores para diferenciar o status das disciplinas.
+- Cores para diferenciar o status das disciplinas.
