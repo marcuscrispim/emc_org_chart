@@ -1,121 +1,85 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/disciplinas')
+document.addEventListener("DOMContentLoaded", function () {
+    const disciplinasContainer = document.getElementById("disciplinas-container");
+
+    fetch("/disciplinas")
         .then(response => response.json())
         .then(data => {
-            const container = document.getElementById('semestres-container');
+            const semestres = data;
+            semestres.forEach((semestre, i) => {
+                const semestreDiv = document.createElement("div");
+                semestreDiv.classList.add("semestre");
 
-            data.semestres.forEach((semestre, index) => {
-                const semestreDiv = document.createElement('div');
-                semestreDiv.classList.add('semestre');
-                const semestreTitle = document.createElement('h2');
-                semestreTitle.textContent = `Semestre ${index + 1}`;
+                const semestreTitle = document.createElement("h3");
+                semestreTitle.textContent = `Semestre ${i + 1}`;
                 semestreDiv.appendChild(semestreTitle);
 
-                Object.keys(semestre).forEach(disciplina => {
-                    const div = document.createElement('div');
-                    div.classList.add('disciplina');
-                    div.textContent = disciplina;
-                    div.addEventListener('click', () => {
-                        handleDisciplinaClick(div, disciplina, data.disciplinas);
+                semestre.forEach(disciplina => {
+                    const disciplinaDiv = document.createElement("div");
+                    disciplinaDiv.classList.add("disciplina");
+                    disciplinaDiv.textContent = disciplina.nome;
+                    disciplinaDiv.dataset.nome = disciplina.nome;
+                    disciplinaDiv.dataset.preRequisitos = JSON.stringify(disciplina.preRequisitos);
+
+                    disciplinaDiv.addEventListener("click", () => {
+                        if (disciplinaDiv.classList.contains("pode-fazer") || disciplinaDiv.classList.contains("concluida")) {
+                            disciplinaDiv.classList.toggle("concluida");
+                            if (disciplinaDiv.classList.contains("concluida")) {
+                                disciplinaDiv.classList.remove("pode-fazer");
+                            }
+                            updateDisciplinasStatus();
+                        }
                     });
-                    semestreDiv.appendChild(div);
+
+                    semestreDiv.appendChild(disciplinaDiv);
                 });
 
-                const marcarCompletadoBtn = document.createElement('button');
-                marcarCompletadoBtn.classList.add('marcar-completado');
-                marcarCompletadoBtn.textContent = 'Marcar Semestre Como Concluído';
-                marcarCompletadoBtn.addEventListener('click', () => {
-                    marcarSemestreComoConcluido(semestreDiv, data.disciplinas);
-                });
-
-                semestreDiv.appendChild(marcarCompletadoBtn);
-                container.appendChild(semestreDiv);
+                disciplinasContainer.appendChild(semestreDiv);
             });
 
-            createLegend();
-            updateHabilitadas(data.disciplinas);
+            updateDisciplinasStatus();
         });
+
+    function updateDisciplinasStatus() {
+        const allDisciplinas = document.querySelectorAll(".disciplina");
+
+        allDisciplinas.forEach(disciplina => {
+            const preRequisitos = JSON.parse(disciplina.dataset.preRequisitos);
+            if (preRequisitos.length === 0) {
+                disciplina.classList.add("pode-fazer");
+            } else {
+                const allConcluidas = preRequisitos.every(pr => {
+                    const prElement = document.querySelector(`[data-nome='${pr}']`);
+                    return prElement && prElement.classList.contains("concluida");
+                });
+
+                if (allConcluidas) {
+                    disciplina.classList.add("pode-fazer");
+                } else {
+                    disciplina.classList.add("nao-pode-fazer");
+                }
+            }
+        });
+
+        // Permitir que disciplinas "não pode fazer" sejam clicadas após seus pré-requisitos serem concluídos
+        allDisciplinas.forEach(disciplina => {
+            if (disciplina.classList.contains("concluida")) {
+                disciplina.classList.add("concluida");
+                disciplina.classList.remove("pode-fazer", "nao-pode-fazer");
+            } else {
+                const preRequisitos = JSON.parse(disciplina.dataset.preRequisitos);
+                const allConcluidas = preRequisitos.every(pr => {
+                    const prElement = document.querySelector(`[data-nome='${pr}']`);
+                    return prElement && prElement.classList.contains("concluida");
+                });
+
+                if (allConcluidas) {
+                    disciplina.classList.remove("nao-pode-fazer");
+                    disciplina.classList.add("pode-fazer");
+                } else {
+                    disciplina.classList.remove("pode-fazer");
+                    disciplina.classList.add("nao-pode-fazer");
+                }
+            }
+        });
+    }
 });
-
-function handleDisciplinaClick(div, disciplina, allDisciplinas) {
-    if (!div.classList.contains('habilitada') && !div.classList.contains('pode-fazer') && !div.classList.contains('completada')) {
-        return;
-    }
-
-    if (!div.classList.contains('completada')) {
-        div.classList.add('completada');
-    } else {
-        div.classList.remove('completada');
-    }
-
-    updateHabilitadas(allDisciplinas);
-}
-
-function updateHabilitadas(allDisciplinas) {
-    const completedDisciplinas = Array.from(document.querySelectorAll('.disciplina.completada'))
-                                        .map(div => div.textContent);
-
-    const allDivs = document.querySelectorAll('.disciplina');
-    allDivs.forEach(d => {
-        const disc = d.textContent;
-        const requisitos = allDisciplinas[disc] || [];
-        const podeFazer = requisitos.every(req => completedDisciplinas.includes(req));
-        const preRequisitosFeitos = requisitos.filter(req => completedDisciplinas.includes(req)).length;
-        
-        d.classList.remove('habilitada', 'pre-requisito', 'selecionada', 'trancada-diretamente', 'trancada-indiretamente', 'pode-fazer');
-
-        if (d.classList.contains('completada')) {
-            d.classList.add('selecionada');
-        } else if (podeFazer) {
-            d.classList.add('pode-fazer');
-        } else if (preRequisitosFeitos > 0) {
-            d.classList.add('trancada-indiretamente');
-        } else {
-            d.classList.add('trancada-diretamente');
-        }
-    });
-
-    const marcarCompletadoBtns = document.querySelectorAll('.marcar-completado');
-    marcarCompletadoBtns.forEach(btn => {
-        const disciplinasNoSemestre = btn.parentElement.querySelectorAll('.disciplina');
-        const todasCompletadas = Array.from(disciplinasNoSemestre).every(div => div.classList.contains('completada'));
-        btn.disabled = todasCompletadas;
-    });
-}
-
-function marcarSemestreComoConcluido(semestreDiv, allDisciplinas) {
-    const disciplinasNoSemestre = semestreDiv.querySelectorAll('.disciplina');
-    disciplinasNoSemestre.forEach(div => {
-        if (div.classList.contains('pode-fazer') || div.classList.contains('habilitada') || !div.classList.contains('completada')) {
-            div.classList.add('completada');
-        }
-    });
-    updateHabilitadas(allDisciplinas);
-}
-
-function createLegend() {
-    const legend = document.createElement('div');
-    legend.classList.add('legend');
-    
-    const legendItems = [
-        { text: 'Pré-requisito', className: 'pre-requisito' },
-        { text: 'Selecionada', className: 'selecionada' },
-        { text: 'Trancada diretamente', className: 'trancada-diretamente' },
-        { text: 'Trancada indiretamente', className: 'trancada-indiretamente' },
-        { text: 'Pode fazer', className: 'pode-fazer' }
-    ];
-    
-    legendItems.forEach(item => {
-        const div = document.createElement('div');
-        div.classList.add('legend-item');
-        const colorBox = document.createElement('span');
-        colorBox.classList.add('color-box', item.className);
-        const text = document.createElement('span');
-        text.textContent = item.text;
-        div.appendChild(colorBox);
-        div.appendChild(text);
-        legend.appendChild(div);
-    });
-
-    document.body.insertBefore(legend, document.getElementById('semestres-container'));
-}

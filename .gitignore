@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__/
+
+# Env
+.env
+venv/
+ENV/
+
+# Flask
+instance/
+*.pyo
+*.pyd
+
+# General
+.DS_Store
+*.log

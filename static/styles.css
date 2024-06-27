@@ -1,96 +1,74 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    padding: 20px;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
-#semestres-container {
+header {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+#legenda {
     display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.legend-item {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.red {
+    background-color: red;
+}
+
+#disciplinas-container {
+    display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 .semestre {
-    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
     margin: 10px;
-    padding: 10px;
-    width: 200px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .disciplina {
-    border: 1px solid #ccc;
+    padding: 20px; /* Aumentado de 10px para 20px */
     margin: 5px;
-    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     cursor: pointer;
-    text-align: center;
 }
 
-.disciplina.habilitada {
-    background-color: cyan;
-}
-
-.disciplina.pre-requisito {
+.disciplina.concluida {
     background-color: green;
-}
-
-.disciplina.selecionada {
-    background-color: blue;
-    color: white;
-}
-
-.disciplina.trancada-diretamente {
-    background-color: red;
-    color: white;
-}
-
-.disciplina.trancada-indiretamente {
-    background-color: yellow;
+    color: #fff;
 }
 
 .disciplina.pode-fazer {
-    background-color: cyan;
-}
-
-.marcar-completado {
-    margin-top: 10px;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.legend {
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.color-box {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-}
-
-.color-box.pre-requisito {
-    background-color: green;
-}
-
-.color-box.selecionada {
     background-color: blue;
+    color: #fff;
 }
 
-.color-box.trancada-diretamente {
+.disciplina.nao-pode-fazer {
     background-color: red;
-}
-
-.color-box.trancada-indiretamente {
-    background-color: yellow;
-}
-
-.color-box.pode-fazer {
-    background-color: cyan;
+    color: #fff;
 }
