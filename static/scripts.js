@@ -13,6 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 semestreTitle.textContent = `Semestre ${i + 1}`;
                 semestreDiv.appendChild(semestreTitle);
 
+                const concluirButton = document.createElement("button");
+                concluirButton.textContent = "Marcar Semestre como Concluído";
+                concluirButton.addEventListener("click", () => {
+                    const disciplinasSemestre = semestreDiv.querySelectorAll(".disciplina");
+                    disciplinasSemestre.forEach(disciplina => {
+                        if (disciplina.classList.contains("pode-fazer") || disciplina.classList.contains("nao-pode-fazer")) {
+                            disciplina.classList.add("concluida");
+                            disciplina.classList.remove("pode-fazer", "nao-pode-fazer");
+                        }
+                    });
+                    updateDisciplinasStatus();
+                });
+                semestreDiv.appendChild(concluirButton);
+
                 semestre.forEach(disciplina => {
                     const disciplinaDiv = document.createElement("div");
                     disciplinaDiv.classList.add("disciplina");
@@ -60,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Permitir que disciplinas "não pode fazer" sejam clicadas após seus pré-requisitos serem concluídos
         allDisciplinas.forEach(disciplina => {
             if (disciplina.classList.contains("concluida")) {
                 disciplina.classList.add("concluida");

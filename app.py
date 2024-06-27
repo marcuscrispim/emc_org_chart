@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-from disciplinas import disciplinas
+from disciplinas import semestres
 
 app = Flask(__name__)
 
@@ -9,14 +9,13 @@ def index():
 
 @app.route('/disciplinas')
 def get_disciplinas():
-    semestres = [list(disciplinas.keys())[i:i + 6] for i in range(0, len(disciplinas), 6)]
     response = []
     for semestre in semestres:
         semestre_data = []
-        for codigo in semestre:
+        for codigo, prereqs in semestre.items():
             semestre_data.append({
                 "nome": codigo,
-                "preRequisitos": disciplinas[codigo]
+                "preRequisitos": prereqs
             })
         response.append(semestre_data)
     return jsonify(response)
