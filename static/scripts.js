@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const disciplinasContainer = document.getElementById("disciplinas-container");
 
-    fetch("/disciplinas")
+    fetch("disciplinas.json")
         .then(response => response.json())
         .then(data => {
             const semestres = data;
