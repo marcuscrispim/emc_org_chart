@@ -1,6 +1,4 @@
-# disciplinas.py
-
-semestres = [
+const semestres = [
     {
         "EGR5213": [],
         "EMC5004": [],
@@ -62,6 +60,14 @@ semestres = [
         "ENS5146": [],
         "EPS5229": [],
     }
-]
+];
 
-disciplinas = {disciplina: prereqs for semestre in semestres for disciplina, prereqs in semestre.items()}
+const disciplinas = {};
+semestres.forEach(semestre => {
+    for (const [disciplina, prereqs] of Object.entries(semestre)) {
+        disciplinas[disciplina] = prereqs;
+    }
+});
+
+// Export the data for use in other scripts
+export { semestres, disciplinas };
