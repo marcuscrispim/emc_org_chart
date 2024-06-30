@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disciplinas de Engenharia Mecânica</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="static/scripts.js" defer></script>
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='image.png') }}" alt="Logo">
+        <img src="static/image.png" alt="Logo">
     </header>
     <main>
         <div id="legenda">
@@ -19,5 +19,6 @@
         </div>
         <div id="disciplinas-container"></div>
     </main>
+    <script src="disciplinas.js"></script>
 </body>
 </html>
