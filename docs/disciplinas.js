@@ -31,7 +31,6 @@ const semestres = [
         "EMC5407": ["EMC5405", "EMC5132"],
         "EMC5418": ["EMC5405"],
         "MTM3104": ["MTM3131"],
-        
     },
     {
         "EMC5110": ["EMC5138", "EMC5201"],
@@ -69,5 +68,4 @@ semestres.forEach(semestre => {
     }
 });
 
-// Export the data for use in other scripts
 export { semestres, disciplinas };

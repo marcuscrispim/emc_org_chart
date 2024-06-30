@@ -1,4 +1,4 @@
-import { semestres, disciplinas } from './disciplinas.js';
+import { semestres, disciplinas } from '../disciplinas.js';
 
 document.addEventListener("DOMContentLoaded", function () {
     const disciplinasContainer = document.getElementById("disciplinas-container");
