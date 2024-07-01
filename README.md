@@ -1,6 +1,6 @@
-# Mechanical Engineering Course Interactive Curriculum - UFSC
+# Currículo Interativo EMC - UFSC
 
-Este projeto é um site interativo para visualizar e marcar disciplinas como concluídas, possíveis de cursar ou impossíveis de cursar, com base nas disciplinas completadas, agradecimento ao Guapo, por ter adicionado as disciplinas.
+Este projeto é um site interativo para visualizar e marcar disciplinas como concluídas, possíveis de cursar ou impossíveis de cursar, com base nas disciplinas completadas, agradecimento ao Guapo, por ter adicionado as disciplina, pode usar um servidor local ou acessar o link.
 
 ### Link
 https://marcuscrispim.github.io/emc_org_chart/
@@ -32,4 +32,3 @@ https://marcuscrispim.github.io/emc_org_chart/
 - Visualização de disciplinas por semestre.
 - Marcar disciplinas como concluídas.
 - Indicar disciplinas que podem ou não podem ser feitas com base nas concluídas.
-- Cores para diferenciar o status das disciplinas.
