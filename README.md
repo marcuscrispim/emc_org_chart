@@ -2,6 +2,9 @@
 
 Este projeto é um site interativo para visualizar e marcar disciplinas como concluídas, possíveis de cursar ou impossíveis de cursar, com base nas disciplinas completadas, agradecimento ao Guapo, por ter adicionado as disciplinas.
 
+### Link
+https://marcuscrispim.github.io/emc_org_chart/
+
 ## Instruções
 
 1. **Clone o repositório:**
