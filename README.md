@@ -3,7 +3,7 @@
 Este projeto é um site interativo para visualizar e marcar disciplinas como concluídas, possíveis de cursar ou impossíveis de cursar, com base nas disciplinas completadas, agradecimento ao Guapo, por ter adicionado as disciplina, pode usar um servidor local ou acessar o link.
 
 ### Link
-***https://marcuscrispim.github.io/emc_org_chart/***
+***[Currículo interativo](https://marcuscrispim.github.io/emc_ufsc/)***
 
 ## Instruções
 
